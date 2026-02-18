@@ -1,0 +1,756 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "88459921-88a4-4531-992a-16ab4e2c428d",
+      "name": "When clicking Execute",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "openai",
+        "messages": {
+          "messageValues": [
+            {
+              "content": "Hi"
+            }
+          ]
+        },
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudAiModelHub",
+      "typeVersion": 1,
+      "position": [
+        224,
+        48
+      ],
+      "id": "bd3dd694-4fcb-42c4-adb9-20ec1a908f8e",
+      "name": "Create chat completion",
+      "credentials": {
+        "ionosCloudApi": {
+          "id": "6HxjEchDEk7ZUB6m",
+          "name": "Ionos Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "name": "test",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudAiModelHub",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -48
+      ],
+      "id": "c3e995ab-8bdd-41ab-ae7f-8a12c3fcac86",
+      "name": "Create a collection",
+      "credentials": {
+        "ionosCloudApi": {
+          "id": "6HxjEchDEk7ZUB6m",
+          "name": "Ionos Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "hi"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        704,
+        -384
+      ],
+      "id": "1d267112-f236-437e-a463-e2198f9f1670",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "modelId": {
+          "__rl": true,
+          "value": "models/veo-2.0-generate-001",
+          "mode": "list",
+          "cachedResultName": "models/veo-2.0-generate-001"
+        },
+        "prompt": "test",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        896,
+        -48
+      ],
+      "id": "230804c9-9b4d-4b05-b462-349b39b7cae7",
+      "name": "Generate a video",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "requestOptions": {}
+      },
+      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudAiModelHub",
+      "typeVersion": 1,
+      "position": [
+        704,
+        176
+      ],
+      "id": "89b50738-aba9-4f17-afbc-7b666c577403",
+      "name": "Get a collection",
+      "credentials": {
+        "ionosCloudApi": {
+          "id": "6HxjEchDEk7ZUB6m",
+          "name": "Ionos Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-pro",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-pro"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1072,
+        -48
+      ],
+      "id": "39bb519e-fb6a-482f-92ee-decc99e1a763",
+      "name": "Analyze an image",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "operation": "update",
+        "updateFields": {},
+        "requestOptions": {}
+      },
+      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudAiModelHub",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        -400
+      ],
+      "id": "cf7c78bf-fb5c-4295-a750-ee56984ed6b4",
+      "name": "Update a document",
+      "credentials": {
+        "ionosCloudApi": {
+          "id": "6HxjEchDEk7ZUB6m",
+          "name": "Ionos Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "openai",
+        "operation": "completion",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudAiModelHub",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        -400
+      ],
+      "id": "1252fa36-a69e-4349-ac60-761fc4c91757",
+      "name": "Create completion",
+      "credentials": {
+        "ionosCloudApi": {
+          "id": "6HxjEchDEk7ZUB6m",
+          "name": "Ionos Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1264,
+        -144
+      ],
+      "id": "8ddc1aa1-1a3e-4a4d-a82e-88ad7b1bfc76",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "resource": "model",
+        "operation": "predict",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudAiModelHub",
+      "typeVersion": 1,
+      "position": [
+        192,
+        192
+      ],
+      "id": "af5fcd52-adcc-45d9-ba79-a88271881242",
+      "name": "Predict with model",
+      "credentials": {
+        "ionosCloudApi": {
+          "id": "6HxjEchDEk7ZUB6m",
+          "name": "Ionos Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        304
+      ],
+      "id": "6e3a12f1-0011-4821-9bb1-2ba6287df0f7",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        304
+      ],
+      "id": "36427e05-6d54-45d3-b2db-058a24cafd7e",
+      "name": "MongoDB Chat Memory"
+    },
+    {
+      "parameters": {
+        "options": {},
+        "requestOptions": {}
+      },
+      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudAiModelHubTool",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        288
+      ],
+      "id": "5e258322-da5b-4dc0-9aef-b49c4dc66c13",
+      "name": "Get many collections in IONOS Cloud AI Model Hub",
+      "credentials": {
+        "ionosCloudApi": {
+          "id": "6HxjEchDEk7ZUB6m",
+          "name": "Ionos Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "openai",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "@ionos-cloud/n8n-nodes-ionos-cloud.ionosCloudAiModelHubTool",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        432
+      ],
+      "id": "d3fc20a4-019a-47da-aa23-db4f01824187",
+      "name": "Create chat completion in IONOS Cloud AI Model Hub",
+      "credentials": {
+        "ionosCloudApi": {
+          "id": "6HxjEchDEk7ZUB6m",
+          "name": "Ionos Cloud account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGeminiTool",
+      "typeVersion": 1.1,
+      "position": [
+        528,
+        416
+      ],
+      "id": "e3ebce56-4aaf-4ffe-a6ce-685980be0a9b",
+      "name": "Message a model in Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "edit",
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "images": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        -112
+      ],
+      "id": "22dd13b9-9732-4bb8-9a92-4987251c57a6",
+      "name": "Edit an image",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        416
+      ],
+      "id": "22a6ff0a-5154-438b-8181-733a7833c3dc",
+      "name": "Analyze audio",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1088,
+        416
+      ],
+      "id": "ef9cf586-e5e5-4389-b79f-5ed8246a696e",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file"
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        976,
+        64
+      ],
+      "id": "11df79d3-1fbe-4105-8970-b4aa49fc781e",
+      "name": "Upload a media file",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "download",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        400
+      ],
+      "id": "9ecee879-0512-4803-aa7b-0c51dcc3eb88",
+      "name": "Download a video",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileSearch"
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1440,
+        400
+      ],
+      "id": "74364118-dff1-4ed8-8c7e-b9ee787f7ff2",
+      "name": "Create a File Search store",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileSearch",
+        "operation": "deleteStore"
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1232,
+        112
+      ],
+      "id": "09d5e6cf-6ca2-49f6-8cf1-fa4777ba7d0c",
+      "name": "Delete a File Search store",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileSearch",
+        "operation": "listStores"
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1440,
+        112
+      ],
+      "id": "674042c3-8507-4ea4-be36-0b47e7e911fb",
+      "name": "List all File Search stores",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileSearch",
+        "operation": "uploadToStore"
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1440,
+        112
+      ],
+      "id": "560721b7-35f6-442a-a073-fca22a9d6795",
+      "name": "Upload a file to a File Search store",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "AikRfKKS52cFtugq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking Execute": {
+      "main": [
+        [
+          {
+            "node": "Create chat completion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create chat completion": {
+      "main": [
+        [
+          {
+            "node": "Create a collection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a collection": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        []
+      ]
+    },
+    "Generate a video": {
+      "main": [
+        [
+          {
+            "node": "Analyze an image",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit an image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a document": {
+      "main": [
+        [
+          {
+            "node": "Create completion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create completion": {
+      "main": [
+        []
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Delete a File Search store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many collections in IONOS Cloud AI Model Hub": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create chat completion in IONOS Cloud AI Model Hub": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit an image": {
+      "main": [
+        [
+          {
+            "node": "Analyze audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze audio": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        []
+      ]
+    },
+    "Upload a media file": {
+      "main": [
+        [
+          {
+            "node": "Download a video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download a video": {
+      "main": [
+        [
+          {
+            "node": "Create a File Search store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a File Search store": {
+      "main": [
+        [
+          {
+            "node": "List all File Search stores",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List all File Search stores": {
+      "main": [
+        [
+          {
+            "node": "Upload a file to a File Search store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "143c04b74509b67bd0f5059e52ee49489fe347b6c9aba668e096fd9533f2f0f2"
+  }
+}
