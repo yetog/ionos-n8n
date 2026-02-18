@@ -1,0 +1,224 @@
+{
+  "meta": {
+    "instanceId": "your-instance-id"
+  },
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [100, 240]
+    },
+    {
+      "parameters": {
+        "url": "https://inference.de-txl.ionos.com/collections",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.IONOS_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "name": "Internal_Policy_Beta_{{ $now }}",
+          "description": "Beta testing collection for IONOS AI Model Hub RAG verification",
+          "engine": {
+            "db_type": "pgvector"
+          },
+          "chunking": {
+            "enabled": true,
+            "strategy": {
+              "name": "fixed_size",
+              "config": {
+                "chunk_size": 512,
+                "chunk_overlap": 50
+              }
+            }
+          }
+        }
+      },
+      "id": "2",
+      "name": "Create Collection",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [320, 240]
+    },
+    {
+      "parameters": {
+        "url": "https://inference.de-txl.ionos.com/collections/{{ $node['Create Collection'].json['id'] }}/documents",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.IONOS_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "content": "IONOS Cloud is a European cloud provider that offers Infrastructure as a Service (IaaS) solutions. Our AI Model Hub provides access to leading AI models including Llama, Mistral, and other open-source models. Key features include: 1) GDPR compliance and European data sovereignty 2) Vector databases for RAG applications 3) OpenAI-compatible API endpoints 4) Multiple AI model options 5) Fully managed service. The platform is ideal for businesses requiring secure, compliant AI solutions within the European regulatory framework.",
+          "metadata": {
+            "source": "IONOS_internal_policy.pdf",
+            "type": "policy_document"
+          }
+        }
+      },
+      "id": "3",
+      "name": "Add Document",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [540, 240]
+    },
+    {
+      "parameters": {
+        "url": "https://inference.de-txl.ionos.com/collections/{{ $node['Create Collection'].json['id'] }}/query",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.IONOS_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "query": "What are the key features of IONOS AI Model Hub?",
+          "top_k": 3
+        }
+      },
+      "id": "4",
+      "name": "Query Collection",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [760, 240]
+    },
+    {
+      "parameters": {
+        "url": "https://openai.inference.de-txl.ionos.com/v1/chat/completions",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.IONOS_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "model": "meta-llama/Llama-3.3-70B-Instruct",
+          "messages": [
+            {
+              "role": "system",
+              "content": "You are a helpful IONOS assistant. Use the following context from our internal documents to answer the user's question accurately: {{ $node['Query Collection'].json['documents'][0]['content'] }}"
+            },
+            {
+              "role": "user",
+              "content": "Based on the internal policy I uploaded, what are the key takeaways about IONOS AI Model Hub?"
+            }
+          ],
+          "max_tokens": 300,
+          "temperature": 0.7
+        }
+      },
+      "id": "5",
+      "name": "Ask Knowledge Base",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [980, 240]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Create Collection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Collection": {
+      "main": [
+        [
+          {
+            "node": "Add Document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Document": {
+      "main": [
+        [
+          {
+            "node": "Query Collection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Collection": {
+      "main": [
+        [
+          {
+            "node": "Ask Knowledge Base",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2026-02-18T04:45:00.000Z",
+      "updatedAt": "2026-02-18T04:45:00.000Z",
+      "id": "ionos-ai-rag",
+      "name": "IONOS AI RAG"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-18T04:45:00.000Z",
+  "versionId": "1"
+}

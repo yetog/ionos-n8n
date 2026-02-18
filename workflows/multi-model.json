@@ -1,0 +1,183 @@
+{
+  "meta": {
+    "instanceId": "your-instance-id"
+  },
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [100, 240]
+    },
+    {
+      "parameters": {
+        "url": "https://openai.inference.de-txl.ionos.com/v1/chat/completions",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.IONOS_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "model": "meta-llama/Llama-3.3-70B-Instruct",
+          "messages": [
+            {
+              "role": "user",
+              "content": "Write a Python function to calculate fibonacci numbers"
+            }
+          ],
+          "max_tokens": 200
+        }
+      },
+      "id": "2",
+      "name": "Llama 3.3 70B",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [320, 160]
+    },
+    {
+      "parameters": {
+        "url": "https://openai.inference.de-txl.ionos.com/v1/chat/completions",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.IONOS_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "model": "meta-llama/CodeLlama-13b-Instruct-hf",
+          "messages": [
+            {
+              "role": "user",
+              "content": "Write a Python function to calculate fibonacci numbers"
+            }
+          ],
+          "max_tokens": 200
+        }
+      },
+      "id": "3",
+      "name": "CodeLlama 13B",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [320, 320]
+    },
+    {
+      "parameters": {
+        "url": "https://openai.inference.de-txl.ionos.com/v1/chat/completions",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.IONOS_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "model": "meta-llama/Llama-3.3-70B-Instruct",
+          "messages": [
+            {
+              "role": "system",
+              "content": "You are a code reviewer. Compare these two implementations and provide feedback."
+            },
+            {
+              "role": "user",
+              "content": "Compare these implementations:\n\nLlama 3.3: {{ $node['Llama 3.3 70B'].json.choices[0].message.content }}\n\nCodeLlama: {{ $node['CodeLlama 13B'].json.choices[0].message.content }}"
+            }
+          ],
+          "max_tokens": 300
+        }
+      },
+      "id": "4",
+      "name": "Compare Results",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [540, 240]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Llama 3.3 70B",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "CodeLlama 13B",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Llama 3.3 70B": {
+      "main": [
+        [
+          {
+            "node": "Compare Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CodeLlama 13B": {
+      "main": [
+        [
+          {
+            "node": "Compare Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2026-02-18T04:45:00.000Z",
+      "updatedAt": "2026-02-18T04:45:00.000Z",
+      "id": "ionos-multi-model",
+      "name": "IONOS Multi-Model Comparison"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-18T04:45:00.000Z",
+  "versionId": "1"
+}

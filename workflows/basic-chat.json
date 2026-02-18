@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "instanceId": "your-instance-id"
+  },
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [100, 240]
+    },
+    {
+      "parameters": {
+        "url": "https://openai.inference.de-txl.ionos.com/v1/chat/completions",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.IONOS_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "model": "meta-llama/Llama-3.3-70B-Instruct",
+          "messages": [
+            {
+              "role": "system",
+              "content": "You are a helpful AI assistant powered by IONOS AI Model Hub. You provide accurate, helpful responses."
+            },
+            {
+              "role": "user",
+              "content": "Hello! Can you tell me about IONOS AI Model Hub and how it helps with European data compliance?"
+            }
+          ],
+          "max_tokens": 300,
+          "temperature": 0.7
+        }
+      },
+      "id": "2",
+      "name": "IONOS Chat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [320, 240]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "IONOS Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2026-02-18T04:45:00.000Z",
+      "updatedAt": "2026-02-18T04:45:00.000Z",
+      "id": "ionos-basic-chat",
+      "name": "IONOS Basic Chat"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-18T04:45:00.000Z",
+  "versionId": "1"
+}
